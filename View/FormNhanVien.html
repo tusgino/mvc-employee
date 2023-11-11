@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhân Viên</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #005f69;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="submit"],
+    select {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      background-color: #007481;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #005f69;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 10px;
+      text-decoration: none;
+      color: #005f69;
+    }
+  </style>
+</head>
+
+<body>
+
+  <?php
+  $action_url = isset($nhanVien) ? "../Controller/Controller.php?action=editNhanVien&id=" . $nhanVien->getIDNV() : "../Controller/Controller.php?action=addNhanVien";
+  $button_text = isset($nhanVien) ? "Cập Nhật Nhân Viên" : "Thêm Nhân Viên";
+  ?>
+
+  <div class="container">
+    <h1>
+      <?php echo $button_text; ?>
+    </h1>
+
+    <form action="<?php echo $action_url; ?>" method="post">
+      <label for="idnv">Mã Nhân Viên:</label>
+      <input type="text" id="idnv" name="idnv" value="<?php echo isset($nhanVien) ? $nhanVien->getIDNV() : ''; ?>" <?php
+        if(isset($nhanVien)) echo 'readonly' ; ?>
+      required>
+      <label for="hoten">Họ Tên:</label>
+      <input type="text" id="hoten" name="hoten" value="<?php echo isset($nhanVien) ? $nhanVien->getHoten() : ''; ?>"
+        required>
+
+      <label for="idpb">Phòng Ban:</label>
+      <select id="idpb" name="idpb" required>
+        <?php foreach($phongBans as $phongBan): ?>
+        <option value="<?php echo $phongBan->getIDPB(); ?>" <?php if(isset($nhanVien) && $nhanVien->getIDPB() ==
+          $phongBan->getIDPB()) echo 'selected'; ?>>
+          <?php echo $phongBan->getTenPB(); ?>
+        </option>
+        <?php endforeach; ?>
+      </select>
+
+      <label for="diachi">Địa Chỉ:</label>
+      <input type="text" id="diachi" name="diachi" value="<?php echo isset($nhanVien) ? $nhanVien->getDiachi() : ''; ?>"
+        required>
+
+      <input type="submit" value="<?php echo $button_text; ?>">
+    </form>
+    <a class="link" href="../Controller/Controller.php?action=nhanVienList">Danh sách nhân viên</a>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách phòng ban</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9f5f8;
+      color: #005f69;
+    }
+
+    h1 {
+      color: #003d4c;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: #007481;
+      color: #ffffff;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #007481;
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+      background-color: #d2e6e9;
+    }
+
+    a {
+      color: #003d4c;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .search-text,
+    .search-key {
+      padding: 5px;
+      margin: 5px 0;
+      border-radius: 5px;
+      border: 1px solid #007481;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-detail {
+      background-color: #007481;
+      color: #ffffff;
+    }
+
+    .btn-edit {
+      background-color: #e9f5f8;
+      color: #005f69;
+    }
+
+    .btn-delete {
+      background-color: #f44336;
+      color: #e9f5f8;
+    }
+
+    .btn-search {
+      background-color: #007481;
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Danh sách nhân viên</h1>
+
+  <form action="../Controller/Controller.php" method="get">
+    <input type="hidden" name="action" value="phongBanList">
+    <input type="text" name="searchText" class="search-text">
+    <select name="searchKey" class="search-key">
+      <option value="ID">Mã phòng ban</option>
+      <option value="Hoten">Tên phòng ban</option>
+      <option value="Diachi">Mô tả</option>
+    </select>
+    <button class="btn btn-search">Tìm kiếm</button>
+  </form>
+
+  <a href="../index.php">Trang chủ</a>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tên phòng ban</th>
+        <th>Mô tả</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($phongBanList as $phongBan) : { ?>
+      <tr>
+        <td>
+          <?php echo $phongBan->getIDPB(); ?>
+        </td>
+        <td>
+          <?php echo $phongBan->getTenPB(); ?>
+        </td>
+        <td>
+          <?php echo $phongBan->getMoTa(); ?>
+        </td>
+        <td>
+          <a href="../Controller/Controller.php?action=detailPhongBan&id=<?php echo $phongBan->getIDPB(); ?>"><button
+              class="btn btn-detail">Chi tiết</button></a>
+          <a href="../Controller/Controller.php?action=editPhongBan&id=<?php echo $phongBan->getIDPB(); ?>"><button
+              class="btn btn-edit">Sửa</button></a>
+          <a href="../Controller/Controller.php?action=deletePhongBan&id=<?php echo $phongBan->getIDPB(); ?>"><button
+              class="btn btn-delete">Xóa</button></a>
+        </td>
+      </tr>
+      <?php }
+      endforeach; ?>
+    </tbody>
+  </table>
+
+
+
+</body>
+
+</html>

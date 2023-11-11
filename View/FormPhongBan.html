@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thêm Phòng Ban</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #005f69;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 10px;
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="number"],
+    input[type="submit"],
+    select {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      background-color: #007481;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #005f69;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 10px;
+      text-decoration: none;
+      color: #005f69;
+    }
+  </style>
+</head>
+
+<body>
+
+  <?php
+    $action_url = isset($phongBan) ? "../Controller/Controller.php?action=editPhongBan&id=" . $phongBan->getIDPB() : "../Controller/Controller.php?action=addPhongBan";
+    $button_text = isset($phongBan) ? "Cập Nhật Phòng Ban" : "Thêm Phong Ban";
+  ?>
+
+  <div class="container">
+    <h1>
+      <?php echo $button_text; ?>
+    </h1>
+
+    <form action="<?php echo $action_url; ?>" method="post">
+      <label for="idpb">Mã Phong Ban:</label>
+      <input type="text" id="idpb" name="idpb" value="<?php echo isset($phongBan) ? $phongBan->getIDPB() : ''; ?>" <?php
+        if(isset($phongBan)) echo 'readonly' ; ?>
+      required>
+      <label for="tenpb">Tên Phong Ban:</label>
+      <input type="text" id="tenpb" name="tenpb" value="<?php echo isset($phongBan) ? $phongBan->getTenPB() : ''; ?>"
+        required>
+
+      <label for="mota">Mô tả:</label>
+      <textarea type="text" id="mota" name="mota" rows="10"
+        value="<?php echo isset($phongBan) ? $phongBan->getMoTa() : ''; ?>" required>
+      </textarea>
+
+      <input type="submit" value="<?php echo $button_text; ?>">
+      <a class="link" href="../Controller/Controller.php?action=phongBanList">Danh sách phòng ban</a>
+    </form>
+
+  </div>
+
+</body>
+
+</html>
